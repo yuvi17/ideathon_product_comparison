@@ -4,6 +4,8 @@ from flask import json,jsonify, json_available
 import requests
 import pandas as pd
 import sqlite3
+from flask_cors import CORS
+
 
 # init code
 df = open("/Users/yuvraj/Downloads/IN/IN.txt").read().rstrip().split("\n")
@@ -107,7 +109,6 @@ def bigBasket(product):
         response['items'] = items
     return response
 
-app = Flask(__name__)
 
 
 def getProducts(search_val):
@@ -153,6 +154,9 @@ def getAllProducts(search_term,pincode):
     resp.append(bigBasket(search_term))
     resp.append(getProducts(search_term))
     return resp
+
+app = Flask(__name__)
+CORS(app)
 
 @app.route('/comparison')
 def product_comparsion():
